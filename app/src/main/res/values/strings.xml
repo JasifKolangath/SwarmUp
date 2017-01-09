@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SwarmUp</string>
+    <string name="action_settings">Settings</string>
+    <string name="intro">This is a prototype of an app developed as part of the mail project named</string>
+    <string name="project_name">Work Sharing Technique in Crowd Computing</string>
+    <string name="guided">Guided By :</string>
+    <string name="by">Sruthi Manmadhan</string>
+</resources>
