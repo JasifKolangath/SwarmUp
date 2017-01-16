@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("SwarmUp");
         setSupportActionBar(toolbar);
 
         CardView integerCard = (CardView) findViewById(R.id.cardViewInteger);
@@ -81,8 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(!delegate.isChecked() && !worker.isChecked())
             Toast.makeText(getApplicationContext(),"Select Role",Toast.LENGTH_LONG).show();
-        switch (v.getId())
-        {
+        else
+            switch (v.getId())
+            {
             case R.id.cardViewInteger:
                 if(delegate.isChecked())
                     startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
