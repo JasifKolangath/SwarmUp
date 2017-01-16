@@ -10,9 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    RadioButton delegate,worker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,20 +31,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        CardView IntegerCard = (CardView) findViewById(R.id.cardViewInteger);
-        CardView MandelCard = (CardView) findViewById(R.id.cardViewMandel);
-        CardView FaceCard = (CardView) findViewById(R.id.cardViewFace);
+        CardView integerCard = (CardView) findViewById(R.id.cardViewInteger);
+        CardView mandelCard = (CardView) findViewById(R.id.cardViewMandel);
+        CardView faceCard = (CardView) findViewById(R.id.cardViewFace);
+        delegate = (RadioButton) findViewById(R.id.delegate_radio);
+        worker = (RadioButton) findViewById(R.id.worker_radio);
 
-        IntegerCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doIntend("integer");
-            }
-        });
+        integerCard.setOnClickListener(this);
+        mandelCard.setOnClickListener(this);
+        faceCard.setOnClickListener(this);
+
     }
 
-    public void doIntend(String app) {
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,5 +64,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(!delegate.isChecked() && !worker.isChecked())
+            Toast.makeText(getApplicationContext(),"Select Role",Toast.LENGTH_LONG).show();
+        switch (v.getId())
+        {
+            case R.id.cardViewInteger:
+                if(delegate.isChecked())
+                    startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
+
+                break;
+            case R.id.cardViewMandel:
+                if(delegate.isChecked())
+                    startActivity(new Intent(getApplicationContext(),MandelbrotActivity.class));
+
+                break;
+            case R.id.cardViewFace:
+                if(delegate.isChecked())
+                    startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
+
+                break;
+        }
     }
 }

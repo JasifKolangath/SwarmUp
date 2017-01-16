@@ -72,12 +72,14 @@
            android:layout_height="wrap_content"
         android:layout_margin="20sp">
         <RadioButton
+            android:id="@+id/delegate_radio"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Delegate"
           android:layout_weight="0.5"
           android:textSize="15sp"  />
         <RadioButton
+            android:id="@+id/worker_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Worker"

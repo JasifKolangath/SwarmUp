@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".IntegerSummationActivity" />
-        <activity android:name=".MandelbrotActivity"></activity>
+        <activity android:name=".MandelbrotActivity" />
+        <activity android:name=".WorkerActivity"></activity>
     </application>
 
 </manifest>
