@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">SwarmUp</string>
     <string name="action_settings">Settings</string>
-    <string name="intro">This is a prototype of an app developed as part of the main project named</string>
-    <string name="project_name">"Work Sharing Technique in Crowd Computing"</string>
-    <string name="guided">Guided By :</string>
-    <string name="by">Sruthi Manmadhan</string>
+    <string name="empty_message">No devices found. Turn on P2P and perform discovery from the Action Bar</string>
+    <string name="label_peers">PEERS</string>
+    <string name="label_me">ME</string>
 </resources>
