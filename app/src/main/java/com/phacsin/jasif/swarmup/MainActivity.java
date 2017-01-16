@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     delegate.setChecked(true);
             }
         });
-        //
     }
 
 
@@ -87,16 +86,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cardViewInteger:
                 if(delegate.isChecked())
                     startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
-
+                else
+                    startActivity(new Intent(getApplicationContext(),WorkerActivity.class));
                 break;
             case R.id.cardViewMandel:
                 if(delegate.isChecked())
                     startActivity(new Intent(getApplicationContext(),MandelbrotActivity.class));
-
+                else
+                    startActivity(new Intent(getApplicationContext(),WorkerActivity.class));
                 break;
             case R.id.cardViewFace:
                 if(delegate.isChecked())
                     startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
+                else
+                    startActivity(new Intent(getApplicationContext(),WorkerActivity.class));
                 break;
         }
     }
