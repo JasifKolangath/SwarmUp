@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -22,15 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabDelegate);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         CardView integerCard = (CardView) findViewById(R.id.cardViewInteger);
         CardView mandelCard = (CardView) findViewById(R.id.cardViewMandel);
         CardView faceCard = (CardView) findViewById(R.id.cardViewFace);
@@ -41,6 +33,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mandelCard.setOnClickListener(this);
         faceCard.setOnClickListener(this);
 
+        delegate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(delegate.isChecked())
+                    worker.setChecked(false);
+                else
+                    worker.setChecked(true);
+            }
+        });
+
+        worker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(worker.isChecked())
+                    delegate.setChecked(false);
+                else
+                    delegate.setChecked(true);
+            }
+        });
     }
 
 
@@ -85,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cardViewFace:
                 if(delegate.isChecked())
                     startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
-
                 break;
         }
     }
