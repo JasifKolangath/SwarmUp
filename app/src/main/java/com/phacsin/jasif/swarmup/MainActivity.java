@@ -1,21 +1,28 @@
 package com.phacsin.jasif.swarmup;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     RadioButton delegate,worker;
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     delegate.setChecked(true);
             }
         });
+
+
     }
 
 
@@ -83,26 +92,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(!delegate.isChecked() && !worker.isChecked())
             Toast.makeText(getApplicationContext(),"Select Role",Toast.LENGTH_LONG).show();
         else
-            switch (v.getId())
-            {
+            switch (v.getId()) {
             case R.id.cardViewInteger:
-                if(delegate.isChecked())
-                    startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
-                else
-                    startActivity(new Intent(getApplicationContext(),WorkerActivity.class));
+                if(delegate.isChecked()) {
+                    intent = new Intent(getApplicationContext(),ConnectedDeviceActivity.class);
+                    intent.putExtra("APP","integer");
+                    intent.putExtra("ROLE","delgate");
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getApplicationContext(),WorkerActivity.class);
+                    intent.putExtra("APP","integer");
+                    intent.putExtra("ROLE","worker");
+                    startActivity(intent);
+                }
                 break;
             case R.id.cardViewMandel:
-                if(delegate.isChecked())
-                    startActivity(new Intent(getApplicationContext(),MandelbrotActivity.class));
-                else
-                    startActivity(new Intent(getApplicationContext(),WorkerActivity.class));
+                if(delegate.isChecked()) {
+                    intent = new Intent(getApplicationContext(),MandelbrotActivity.class);
+                    intent.putExtra("APP","mandel");
+                    intent.putExtra("ROLE","delgate");
+                    startActivity(intent);
+                }
+                else {
+                    intent = new Intent(getApplicationContext(),WorkerActivity.class);
+                    intent.putExtra("APP","mandel");
+                    intent.putExtra("ROLE","worker");
+                    startActivity(intent);
+                }
                 break;
             case R.id.cardViewFace:
-                if(delegate.isChecked())
-                    startActivity(new Intent(getApplicationContext(),IntegerSummationActivity.class));
-                else
-                    startActivity(new Intent(getApplicationContext(),WorkerActivity.class));
+                if(delegate.isChecked()) {
+                    intent = new Intent(getApplicationContext(),IntegerSummationActivity.class);
+                    intent.putExtra("APP","face");
+                    intent.putExtra("ROLE","delgate");
+                    startActivity(intent);
+                }
+                else {
+                intent = new Intent(getApplicationContext(),WorkerActivity.class);
+                intent.putExtra("APP","face");
+                    intent.putExtra("ROLE","worker");
+                startActivity(intent);
+                }
                 break;
-        }
+            }
     }
+
+
+
+
+
+
 }
