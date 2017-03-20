@@ -3,9 +3,7 @@ package com.phacsin.jasif.swarmup;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -13,20 +11,16 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -44,8 +38,11 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
     private WifiP2pDevice device;
     private WifiP2pInfo info;
     ProgressDialog progressDialog = null;
-    EditText number1,number2;
+    EditText lowerLimit, upperLimit;
+    long mid = 0;
+    long intUpper , intLower;
     static TextView result_tv;
+    static long i=0;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -56,8 +53,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mContentView = inflater.inflate(R.layout.device_detail, null);
-        number1 = (EditText) mContentView.findViewById(R.id.editText_1);
-        number2 = (EditText) mContentView.findViewById(R.id.editText_2);
+        lowerLimit = (EditText) mContentView.findViewById(R.id.editText_1);
+        upperLimit = (EditText) mContentView.findViewById(R.id.editText_2);
         result_tv = (TextView) mContentView.findViewById(R.id.result);
 
         mContentView.findViewById(R.id.btn_connect).setOnClickListener(new View.OnClickListener() {
@@ -101,19 +98,28 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                     public void onClick(View v) {
                         // Allow user to pick an image from Gallery or other
                         // registered apps
-                        if(!number1.getText().toString().equals("") && !number2.getText().toString().equals("")) {
-                            Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
-                            serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
-                            serviceIntent.putExtra(FileTransferService.EXTRAS_NUMBER_1, number1.getText().toString());
-                            serviceIntent.putExtra(FileTransferService.EXTRAS_NUMBER_2, number2.getText().toString());
-                            serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+                        intLower = Long.parseLong(lowerLimit.getText().toString());
+                        intUpper = Long.parseLong(upperLimit.getText().toString());
+                        if((intUpper - intLower)%2 == 0) {
+                            mid = (intUpper - intLower)/2;
+                        } else {
+                            mid = ((intUpper - intLower) + 1)/2;
+                        }
+                        Toast.makeText(getActivity(),String.valueOf(mid),Toast.LENGTH_LONG).show();
+                        if(!String.valueOf(mid).equals("") && !upperLimit.getText().toString().equals("")) {
+                            Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
+                            serviceIntent.setAction(DataTransferService.ACTION_SEND_FILE);
+                            serviceIntent.putExtra(DataTransferService.EXTRAS_NUMBER_1, String.valueOf(mid+1));
+                            serviceIntent.putExtra(DataTransferService.EXTRAS_NUMBER_2, upperLimit.getText().toString());
+                            serviceIntent.putExtra(DataTransferService.EXTRAS_NUMBER_3, lowerLimit.getText().toString());
+                            serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
                                     info.groupOwnerAddress.getHostAddress());
-                            serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
+                            serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
                             getActivity().startService(serviceIntent);
                         }
                         else
                         {
-                            Toast.makeText(getActivity(),"Enter Two Numbers",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(),"Enter Limit",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -222,7 +228,10 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                 DataOutputStream outputstream = new DataOutputStream(client.getOutputStream());
                 String number1 = inputstream.readUTF();
                 String number2 = inputstream.readUTF();
-                int result = Integer.parseInt(number1) + Integer.parseInt(number2);
+                long result = 0;
+                for(i=Long.parseLong(number1);i<=Long.parseLong(number2);i++) {
+                    result+=i;
+                }
                 outputstream.writeUTF(String.valueOf(result));
                 serverSocket.close();
                 String printStr = "The sum of " + number1 + " & " + number2 + " is " + result;

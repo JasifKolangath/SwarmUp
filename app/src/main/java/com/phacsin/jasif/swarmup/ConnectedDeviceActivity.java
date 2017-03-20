@@ -61,9 +61,10 @@ public class ConnectedDeviceActivity extends AppCompatActivity implements WifiP2
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
 
-        IntentFilter intentFilter = new IntentFilter(FileTransferService.ACTION_MyIntentService);
+        IntentFilter intentFilter = new IntentFilter(DataTransferService.ACTION_MyIntentService);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(myBroadcastReceiver, intentFilter);
+
     }
 
     @Override
@@ -267,9 +268,11 @@ public class ConnectedDeviceActivity extends AppCompatActivity implements WifiP2
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String result = intent.getStringExtra(FileTransferService.EXTRAS_RESULT);
+            String result = intent.getStringExtra(DataTransferService.EXTRAS_RESULT);
             Log.d(ConnectedDeviceActivity.TAG,result);
-            textView.setText(result);
+            Toast.makeText(ConnectedDeviceActivity.this,result ,
+                    Toast.LENGTH_SHORT).show();
+            //textView.setText(result);
         }
     }
 

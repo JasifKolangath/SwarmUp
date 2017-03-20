@@ -44,13 +44,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
                 android:inputType="number"
-            android:hint="Enter First Number"/>
+            android:hint="Lower Limit"/>
         <EditText
             android:id="@+id/editText_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="Enter Second Number"/>
+            android:hint="Upper Limit"/>
 
         </LinearLayout>
         <TextView

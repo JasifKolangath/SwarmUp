@@ -32,7 +32,7 @@
 
         </activity>
 
-        <service android:enabled="true" android:name=".FileTransferService" />
+        <service android:enabled="true" android:name=".DataTransferService" />
     </application>
 
 </manifest>

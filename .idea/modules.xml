@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SwarmUp.iml" filepath="$PROJECT_DIR$/SwarmUp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/swarm-up-library/swarm-up-library.iml" filepath="$PROJECT_DIR$/swarm-up-library/swarm-up-library.iml" />
     </modules>
   </component>
 </project>
